@@ -1,15 +1,15 @@
 const express = require ('express');
-
 const app = express();
-app.get('/:id',(request, response)=>{
-    const { 
-    params: { id },
-    } = request;
-    console.log(id);
-    response.send('Prueba de express');
-})
+const { Config } = require("./src/config/config")
+const  { apiUser } = require("./src/user/index.js");
 
-app.listen(3000,()=>{
-    console.log('Server is runnig');
+//middleware
+app.use(express.json());
+apiUser(app);
+
+const puerto = Config.port ? Config.port : 5000;
+
+app.listen(puerto, () => {
+    console.log(`Server is runnig on port ${puerto}`);
 })
 
